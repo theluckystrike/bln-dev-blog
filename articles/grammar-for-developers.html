@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar for Developers: A Practical Guide to Writing Clear Technical English</title>
+    <meta name="description" content="The 10 most common grammar mistakes developers make in code reviews, PR comments, and documentation. Includes L1-specific patterns and automated fixes.">
+    <meta property="og:title" content="Grammar for Developers: A Practical Guide to Writing Clear Technical English">
+    <meta property="og:description" content="The 10 most common grammar mistakes developers make in code reviews, PR comments, and documentation.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://theluckystrike.github.io/bln-dev-blog/articles/grammar-for-developers.html">
+    <meta property="article:published_time" content="2026-05-03">
+    <meta property="article:author" content="BeLikeNative Team">
+    <link rel="canonical" href="https://theluckystrike.github.io/bln-dev-blog/articles/grammar-for-developers.html">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0d1117;
+            --bg-card: #161b22;
+            --bg-hover: #1c2129;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --green: #3fb950;
+            --red: #f85149;
+            --purple: #bc8cff;
+            --yellow: #d29922;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        .site-header {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+        }
+        .header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .site-logo { font-size: 1.25rem; font-weight: 700; color: var(--text); }
+        .site-logo:hover { color: var(--accent); text-decoration: none; }
+        .site-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+        .site-nav a { color: var(--text-muted); font-size: 0.9rem; }
+        .site-nav a:hover { color: var(--text); text-decoration: none; }
+
+        .breadcrumb {
+            max-width: 720px;
+            margin: 1.5rem auto 0;
+            padding: 0 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a { color: var(--text-muted); }
+        .breadcrumb a:hover { color: var(--accent); }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+        .article-container h1 {
+            font-size: 2rem;
+            line-height: 1.25;
+            margin-bottom: 0.75rem;
+        }
+        .article-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-container h2 {
+            font-size: 1.4rem;
+            margin: 2rem 0 0.75rem;
+            padding-top: 1rem;
+        }
+        .article-container h3 {
+            font-size: 1.15rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+        .article-container p { margin-bottom: 1rem; }
+        .article-container ul, .article-container ol {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+        .article-container li { margin-bottom: 0.4rem; }
+        .article-container code {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+        .article-container pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .article-container pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .example-block {
+            background: var(--bg-card);
+            border-left: 3px solid var(--border);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .example-block.bad { border-left-color: var(--red); }
+        .example-block.good { border-left-color: var(--green); }
+        .example-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
+        }
+        .example-label.bad { color: var(--red); }
+        .example-label.good { color: var(--green); }
+
+        .cta-box {
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .cta-box h3 { margin-bottom: 0.5rem; color: var(--accent); }
+        .cta-box p { color: var(--text-muted); margin-bottom: 1rem; }
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg) !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+        .cta-btn:hover { background: var(--accent-hover); text-decoration: none; }
+
+        .related-articles {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related-articles h2 { margin-top: 0; padding-top: 0; }
+        .related-link {
+            display: block;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .related-link:hover { border-color: var(--accent); text-decoration: none; }
+        .related-link strong { color: var(--text); }
+        .related-link span { display: block; color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; }
+
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .footer-links {
+            max-width: 960px;
+            margin: 0 auto 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .article-container h1 { font-size: 1.5rem; }
+            .article-container h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../" class="site-logo">BeLikeNative Dev Blog</a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+                <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            </nav>
+        </div>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../">Home</a> &rsaquo; Grammar for Developers
+    </nav>
+
+    <article class="article-container">
+        <h1>Grammar for Developers: A Practical Guide to Writing Clear Technical English</h1>
+        <div class="article-meta">Published May 3, 2026 &middot; BeLikeNative Team &middot; 10 min read</div>
+
+        <p>Software development is a writing-intensive profession. Between commit messages, pull request descriptions, code comments, documentation, Slack messages, and issue reports, the average developer writes thousands of words per week. Yet most developers never think about the quality of that writing until a miscommunication causes a bug, a blocked PR, or a frustrated teammate.</p>
+
+        <p>Grammar in code-adjacent writing is not about being "proper." It is about being understood on the first read. When a code review comment is ambiguous, the reviewer and the author waste a round trip clarifying. When a README is confusing, potential users close the tab. When a commit message is vague, debugging six months later becomes archaeology.</p>
+
+        <h2>Why Grammar Matters in Code</h2>
+
+        <p>Research on code review effectiveness shows that communication clarity directly impacts review turnaround time. A study of large open-source projects found that PRs with clear, grammatically correct descriptions were merged 30% faster than those with ambiguous language. This makes intuitive sense: if a reviewer has to re-read your PR description three times to understand the intent, they are spending cognitive effort on parsing language instead of evaluating logic.</p>
+
+        <p>Grammar matters even more in distributed teams. When your teammates span twelve time zones, every message is asynchronous. An unclear comment at 3 PM in Berlin might not get clarified until 9 AM the next day in San Francisco. That is a full business day lost to a misplaced modifier or an ambiguous pronoun.</p>
+
+        <h2>The Top 10 Grammar Mistakes in Code Reviews</h2>
+
+        <h3>1. Missing Articles (a, an, the)</h3>
+        <p>This is the single most common grammar issue in developer writing, especially for developers whose first language is Chinese, Japanese, Korean, Russian, or Hindi, where articles either do not exist or work very differently.</p>
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "This function returns user from database."
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "This function returns <strong>a</strong> user from <strong>the</strong> database."
+        </div>
+
+        <h3>2. Subject-Verb Agreement</h3>
+        <p>Particularly tricky with collective nouns and technical terms. Is "data" singular or plural? (In technical writing, either is acceptable, but be consistent.)</p>
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "The list of users are sorted by name."
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "The list of users <strong>is</strong> sorted by name."
+        </div>
+
+        <h3>3. Wrong Prepositions</h3>
+        <p>Preposition usage is largely idiomatic in English and rarely transfers directly from other languages. Romance language speakers often struggle here because preposition mappings between French/Spanish/Portuguese and English are many-to-many.</p>
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "This depends of the configuration." / "We need to discuss about the API."
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "This depends <strong>on</strong> the configuration." / "We need to discuss the API."
+        </div>
+
+        <h3>4. Dangling Modifiers</h3>
+        <p>These create genuinely ambiguous meaning, which is dangerous in technical writing.</p>
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "After refactoring the module, the tests started failing."
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "After <strong>I refactored</strong> the module, the tests started failing."
+        </div>
+
+        <h3>5. Comma Splices</h3>
+        <p>Two independent clauses joined with just a comma. Common in fast-typed PR comments.</p>
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "This fixes the null pointer, it was caused by uninitialized state."
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "This fixes the null pointer<strong>. It</strong> was caused by uninitialized state."
+        </div>
+
+        <h3>6. Tense Inconsistency</h3>
+        <p>Mixing past and present tense within the same description. Convention: commit messages use imperative mood ("Add feature"), PR descriptions use present tense ("This PR adds...").</p>
+
+        <h3>7. Pronoun Ambiguity</h3>
+        <p>"It" and "this" without clear antecedents are epidemic in code reviews.</p>
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "The handler calls the service and it returns an error." (What returns an error?)
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "The handler calls the service, and <strong>the service</strong> returns an error."
+        </div>
+
+        <h3>8. Run-On Sentences</h3>
+        <p>A single sentence trying to explain an entire architectural decision. If your sentence has more than two clauses, split it.</p>
+
+        <h3>9. Passive Voice Overuse</h3>
+        <p>Passive voice obscures who is responsible for an action, which is exactly the wrong thing in a code review where accountability matters.</p>
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "The configuration was changed and the tests were broken."
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "<strong>This commit changes</strong> the configuration, which <strong>breaks</strong> the tests."
+        </div>
+
+        <h3>10. Inconsistent Capitalization and Punctuation</h3>
+        <p>Not strictly grammar, but affects readability. Decide on a style for your project and stick with it. Should function references be <code>camelCase</code> in prose? Should sentences in comments end with periods? Pick a convention.</p>
+
+        <h2>L1-Specific Patterns</h2>
+
+        <p>Understanding why certain grammar mistakes happen is the first step to fixing them. Many errors are direct transfers from a developer's native language (L1).</p>
+
+        <ul>
+            <li><strong>CJK speakers (Chinese, Japanese, Korean):</strong> Missing articles ("a," "the") and plural markers. These languages lack articles entirely, so there is no instinct to add them. Also, countable vs. uncountable noun distinctions ("informations" is not a word in English).</li>
+            <li><strong>Romance language speakers (Spanish, French, Portuguese, Italian):</strong> Wrong prepositions (direct translation from "depende de" to "depends of"), adjective-noun order issues, and false cognates. "Actually" does not mean "currently" despite what "actualmente" suggests.</li>
+            <li><strong>Germanic language speakers (German, Dutch, Swedish):</strong> Compound noun formation ("the database connection retry timeout value handler") and word order in subordinate clauses.</li>
+            <li><strong>Slavic language speakers (Russian, Polish, Ukrainian):</strong> Missing articles (Slavic languages have none), missing copula ("this necessary" instead of "this is necessary"), and aspect confusion (perfective vs. imperfective does not map cleanly to English tenses).</li>
+            <li><strong>South Asian language speakers (Hindi, Tamil, Telugu):</strong> Word order variations (SOV languages mapping to English SVO), article usage, and preposition selection.</li>
+        </ul>
+
+        <h2>How to Automate Grammar Checking in Your Workflow</h2>
+
+        <p>Manual proofreading does not scale. The same way you use linters for code style, you can use automated tools for writing quality.</p>
+
+        <p><strong>In the browser:</strong> The <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">BeLikeNative Chrome Extension</a> runs grammar and style checks in real time as you write in GitHub, GitLab, Jira, Confluence, and any other web-based tool. It is designed specifically for technical English, so it understands that <code>useState</code> is not a spelling error and that "refactor the auth module" is valid imperative mood.</p>
+
+        <p><strong>In CI/CD:</strong> The <a href="https://github.com/niceBeLikeNative/belikenative-grammar-check" target="_blank" rel="noopener">belikenative-grammar-check</a> GitHub Action runs on every PR and flags grammar issues in your documentation, README, and markdown files. It catches issues before they reach reviewers, reducing the grammar-related back-and-forth in reviews.</p>
+
+        <p>The key is to make grammar checking as invisible as linting. Nobody thinks about running ESLint manually anymore because it runs on every commit. Grammar checking should work the same way: automated, non-blocking, and integrated into the tools you already use.</p>
+
+        <div class="cta-box">
+            <h3>Stop Catching Grammar Mistakes Manually</h3>
+            <p>Let automation handle the grammar so you can focus on the logic.</p>
+            <a href="https://github.com/niceBeLikeNative/belikenative-grammar-check" class="cta-btn" target="_blank" rel="noopener">Grammar Check Action</a>
+            <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" class="cta-btn" target="_blank" rel="noopener">Chrome Extension</a>
+        </div>
+
+        <section class="related-articles">
+            <h2>Related Articles</h2>
+            <a href="code-review-communication.html" class="related-link">
+                <strong>Code Review Communication: How to Give Clear, Constructive Feedback</strong>
+                <span>Learn tone and language patterns that work across cultures and timezones.</span>
+            </a>
+            <a href="commit-message-guide.html" class="related-link">
+                <strong>The Complete Guide to Writing Better Commit Messages</strong>
+                <span>Master the imperative mood, Conventional Commits, and 10 before-and-after examples.</span>
+            </a>
+            <a href="readme-writing-guide.html" class="related-link">
+                <strong>How to Write a README That People Actually Read</strong>
+                <span>Section-by-section guide with a complete template you can copy and paste.</span>
+            </a>
+            <a href="i18n-best-practices.html" class="related-link">
+                <strong>i18n Best Practices for React and JavaScript Projects</strong>
+                <span>From string extraction to plural handling to automated detection.</span>
+            </a>
+        </section>
+    </article>
+
+    <footer class="site-footer">
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+            <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+            <a href="grammar-for-developers.html">Grammar Guide</a>
+            <a href="i18n-best-practices.html">i18n Guide</a>
+            <a href="commit-message-guide.html">Commit Guide</a>
+            <a href="readme-writing-guide.html">README Guide</a>
+            <a href="code-review-communication.html">Code Review Guide</a>
+        </nav>
+        <p>&copy; 2026 BeLikeNative. Helping developers write better English, one commit at a time.</p>
+    </footer>
+</body>
+</html>

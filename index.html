@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeLikeNative Developer Blog — Writing Better English for Developers</title>
+    <meta name="description" content="Practical guides for developers who write in English. Grammar, i18n, commit messages, README writing, and code review communication.">
+    <meta property="og:title" content="BeLikeNative Developer Blog — Writing Better English for Developers">
+    <meta property="og:description" content="Practical guides for developers who write in English. Grammar, i18n, commit messages, README writing, and code review communication.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://theluckystrike.github.io/bln-dev-blog/">
+    <link rel="canonical" href="https://theluckystrike.github.io/bln-dev-blog/">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0d1117;
+            --bg-card: #161b22;
+            --bg-hover: #1c2129;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --green: #3fb950;
+            --purple: #bc8cff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+        /* Header */
+        .site-header {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+        }
+        .header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .site-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .site-logo:hover { color: var(--accent); text-decoration: none; }
+        .site-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+        .site-nav a { color: var(--text-muted); font-size: 0.9rem; }
+        .site-nav a:hover { color: var(--text); text-decoration: none; }
+
+        /* Hero */
+        .hero {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.25rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            max-width: 640px;
+            margin: 0 auto 1.5rem;
+        }
+        .hero-cta {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg) !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .hero-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
+        /* Articles grid */
+        .articles {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem 3rem;
+        }
+        .articles h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .article-card:hover { border-color: var(--accent); background: var(--bg-hover); }
+        .article-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .article-card h3 a { color: var(--text); }
+        .article-card h3 a:hover { color: var(--accent); text-decoration: none; }
+        .article-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+        .article-meta .tag {
+            display: inline-block;
+            background: rgba(88,166,255,0.1);
+            color: var(--accent);
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        .article-card p {
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        .read-more {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Tools sidebar */
+        .tools-section {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+        .tools-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .tool-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+        .tool-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .footer-links {
+            max-width: 960px;
+            margin: 0 auto 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            .hero p { font-size: 1rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="site-logo">BeLikeNative Dev Blog</a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+                <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Writing Better English for Developers</h1>
+            <p>Practical guides to help developers write clearer commit messages, better documentation, and more effective code reviews. Whether English is your first language or your fourth, writing well makes your code more impactful.</p>
+            <a href="https://belikenative.com" class="hero-cta" target="_blank" rel="noopener">Try BeLikeNative Free</a>
+        </section>
+
+        <section class="articles">
+            <h2>Latest Articles</h2>
+
+            <article class="article-card">
+                <h3><a href="articles/grammar-for-developers.html">Grammar for Developers: A Practical Guide to Writing Clear Technical English</a></h3>
+                <div class="article-meta">May 3, 2026 &middot; BeLikeNative Team <span class="tag">Grammar</span></div>
+                <p>Code reviews are 40% communication, not just logic. Learn the 10 most common grammar mistakes developers make in PRs and documentation, why they happen across different native languages, and how to catch them automatically.</p>
+                <a href="articles/grammar-for-developers.html" class="read-more">Read the full guide &rarr;</a>
+            </article>
+
+            <article class="article-card">
+                <h3><a href="articles/i18n-best-practices.html">i18n Best Practices for React and JavaScript Projects</a></h3>
+                <div class="article-meta">May 3, 2026 &middot; BeLikeNative Team <span class="tag">i18n</span></div>
+                <p>Internationalization is more than just wrapping strings in a translate function. This guide covers the real-world patterns for React and JavaScript i18n, from string extraction to plural handling to automated detection of hardcoded text.</p>
+                <a href="articles/i18n-best-practices.html" class="read-more">Read the full guide &rarr;</a>
+            </article>
+
+            <article class="article-card">
+                <h3><a href="articles/commit-message-guide.html">The Complete Guide to Writing Better Commit Messages</a></h3>
+                <div class="article-meta">May 3, 2026 &middot; BeLikeNative Team <span class="tag">Git</span></div>
+                <p>Your commit history is documentation. Learn the Conventional Commits format, master the imperative mood (and why it trips up non-native speakers), and see 10 before-and-after examples that turn vague commits into useful history.</p>
+                <a href="articles/commit-message-guide.html" class="read-more">Read the full guide &rarr;</a>
+            </article>
+
+            <article class="article-card">
+                <h3><a href="articles/readme-writing-guide.html">How to Write a README That People Actually Read</a></h3>
+                <div class="article-meta">May 3, 2026 &middot; BeLikeNative Team <span class="tag">Documentation</span></div>
+                <p>A README is your project's front door. This section-by-section guide shows you how to write a README that gets people from "what is this?" to "how do I install it?" in under 30 seconds. Includes a complete copy-paste template.</p>
+                <a href="articles/readme-writing-guide.html" class="read-more">Read the full guide &rarr;</a>
+            </article>
+
+            <article class="article-card">
+                <h3><a href="articles/code-review-communication.html">Code Review Communication: How to Give Clear, Constructive Feedback</a></h3>
+                <div class="article-meta">May 3, 2026 &middot; BeLikeNative Team <span class="tag">Code Review</span></div>
+                <p>Great code reviews are about communication, not criticism. Learn how to give direct, constructive feedback that works across cultures and timezones, with real examples of how to rewrite common PR comments for clarity and kindness.</p>
+                <a href="articles/code-review-communication.html" class="read-more">Read the full guide &rarr;</a>
+            </article>
+        </section>
+
+        <section class="tools-section">
+            <h2>BeLikeNative Developer Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3><a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a></h3>
+                    <p>Real-time grammar and style correction in GitHub, GitLab, Jira, and everywhere you write in the browser.</p>
+                </div>
+                <div class="tool-card">
+                    <h3><a href="https://github.com/niceBeLikeNative/belikenative-grammar-check" target="_blank" rel="noopener">Grammar Check Action</a></h3>
+                    <p>GitHub Action that checks grammar in PRs, issues, and documentation files on every push.</p>
+                </div>
+                <div class="tool-card">
+                    <h3><a href="https://github.com/niceBeLikeNative/bln-i18n-checker" target="_blank" rel="noopener">i18n Checker Action</a></h3>
+                    <p>Automatically detect hardcoded strings and missing translations in your React and JavaScript projects.</p>
+                </div>
+                <div class="tool-card">
+                    <h3><a href="https://github.com/niceBeLikeNative/bln-commit-lint" target="_blank" rel="noopener">Commit Lint Action</a></h3>
+                    <p>Enforce Conventional Commits format, imperative mood, and consistent style in commit messages.</p>
+                </div>
+                <div class="tool-card">
+                    <h3><a href="https://github.com/niceBeLikeNative/bln-writing-assistant" target="_blank" rel="noopener">Writing Assistant Action</a></h3>
+                    <p>Review documentation, README files, and markdown for clarity, grammar, and completeness.</p>
+                </div>
+                <div class="tool-card">
+                    <h3><a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative Web App</a></h3>
+                    <p>Full writing assistant for longer documents, emails, and technical content. Free tier available.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+            <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+            <a href="articles/grammar-for-developers.html">Grammar Guide</a>
+            <a href="articles/i18n-best-practices.html">i18n Guide</a>
+            <a href="articles/commit-message-guide.html">Commit Guide</a>
+            <a href="articles/readme-writing-guide.html">README Guide</a>
+            <a href="articles/code-review-communication.html">Code Review Guide</a>
+        </nav>
+        <p>&copy; 2026 BeLikeNative. Helping developers write better English, one commit at a time.</p>
+    </footer>
+</body>
+</html>

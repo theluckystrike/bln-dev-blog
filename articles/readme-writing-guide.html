@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Write a README That People Actually Read</title>
+    <meta name="description" content="A section-by-section guide to writing effective README files. Includes a complete template, tips for non-native English speakers, and common mistakes to avoid.">
+    <meta property="og:title" content="How to Write a README That People Actually Read">
+    <meta property="og:description" content="Section-by-section guide to writing README files that actually get read. Template included.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://theluckystrike.github.io/bln-dev-blog/articles/readme-writing-guide.html">
+    <meta property="article:published_time" content="2026-05-03">
+    <meta property="article:author" content="BeLikeNative Team">
+    <link rel="canonical" href="https://theluckystrike.github.io/bln-dev-blog/articles/readme-writing-guide.html">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0d1117;
+            --bg-card: #161b22;
+            --bg-hover: #1c2129;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --green: #3fb950;
+            --red: #f85149;
+            --purple: #bc8cff;
+            --yellow: #d29922;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        .site-header { border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; }
+        .header-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+        .site-logo { font-size: 1.25rem; font-weight: 700; color: var(--text); }
+        .site-logo:hover { color: var(--accent); text-decoration: none; }
+        .site-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+        .site-nav a { color: var(--text-muted); font-size: 0.9rem; }
+        .site-nav a:hover { color: var(--text); text-decoration: none; }
+        .breadcrumb { max-width: 720px; margin: 1.5rem auto 0; padding: 0 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
+        .breadcrumb a { color: var(--text-muted); }
+        .breadcrumb a:hover { color: var(--accent); }
+        .article-container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+        .article-container h1 { font-size: 2rem; line-height: 1.25; margin-bottom: 0.75rem; }
+        .article-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+        .article-container h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; padding-top: 1rem; }
+        .article-container h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
+        .article-container p { margin-bottom: 1rem; }
+        .article-container ul, .article-container ol { margin: 0.5rem 0 1rem 1.5rem; }
+        .article-container li { margin-bottom: 0.4rem; }
+        .article-container code {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+        .article-container pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+        .article-container pre code { background: none; border: none; padding: 0; }
+        .template-block {
+            background: var(--bg-card);
+            border: 1px solid var(--green);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .template-block h4 {
+            color: var(--green);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+        .example-block {
+            background: var(--bg-card);
+            border-left: 3px solid var(--border);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .example-block.bad { border-left-color: var(--red); }
+        .example-block.good { border-left-color: var(--green); }
+        .example-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+        .example-label.bad { color: var(--red); }
+        .example-label.good { color: var(--green); }
+        .cta-box {
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .cta-box h3 { margin-bottom: 0.5rem; color: var(--accent); }
+        .cta-box p { color: var(--text-muted); margin-bottom: 1rem; }
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg) !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+        .cta-btn:hover { background: var(--accent-hover); text-decoration: none; }
+        .related-articles { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .related-articles h2 { margin-top: 0; padding-top: 0; }
+        .related-link {
+            display: block;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .related-link:hover { border-color: var(--accent); text-decoration: none; }
+        .related-link strong { color: var(--text); }
+        .related-link span { display: block; color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; }
+        .site-footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .footer-links { max-width: 960px; margin: 0 auto 1rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 1.25rem; }
+        @media (max-width: 600px) {
+            .article-container h1 { font-size: 1.5rem; }
+            .article-container h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../" class="site-logo">BeLikeNative Dev Blog</a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+                <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            </nav>
+        </div>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../">Home</a> &rsaquo; README Writing Guide
+    </nav>
+
+    <article class="article-container">
+        <h1>How to Write a README That People Actually Read</h1>
+        <div class="article-meta">Published May 3, 2026 &middot; BeLikeNative Team &middot; 12 min read</div>
+
+        <p>A README is the front door of your project. It is the first thing visitors see on GitHub, and for most open-source projects, it is the only documentation most users will ever read. A great README converts a casual browser into a user. A bad README sends them looking for alternatives.</p>
+
+        <p>The median time a developer spends evaluating a GitHub repository before deciding whether to use it is under 30 seconds. In that window, they scan the README for three things: what does this do, how do I install it, and is this actively maintained. If they cannot find those answers in half a minute, they leave.</p>
+
+        <h2>The Anatomy of a Great README</h2>
+
+        <p>Every effective README follows a predictable structure. Users expect certain sections in a certain order because that pattern has been established by thousands of successful projects. Deviating from this structure forces readers to hunt for information, which is the opposite of what documentation should do.</p>
+
+        <p>Here are the essential sections, in order:</p>
+
+        <h3>1. Project Title and Description</h3>
+        <p>Start with the project name as an H1 heading, followed by a one-sentence description that explains what the project does. Not how it works, not what technology it uses, but what problem it solves for the user.</p>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Weak</div>
+            "A React component library built with TypeScript and Styled Components using atomic design principles."
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">Strong</div>
+            "A set of accessible, customizable UI components for React. Drop-in replacements for HTML elements with built-in dark mode, keyboard navigation, and screen reader support."
+        </div>
+
+        <p>The weak version describes the implementation. The strong version describes the value to the user. Lead with benefits, not technology.</p>
+
+        <h3>2. Badges</h3>
+        <p>Badges communicate project health at a glance: build status, test coverage, npm version, license, download count. Place them immediately after the description. Use shields.io for consistent styling.</p>
+
+        <p>Do not overdo badges. Five to seven is the sweet spot. A wall of 20 badges looks cluttered and communicates nothing except that the maintainer likes badges.</p>
+
+        <h3>3. Quick Start / Installation</h3>
+        <p>This is the most important section. A reader who makes it here is interested. Give them a copy-pasteable command to get started.</p>
+
+        <pre><code>npm install your-package</code></pre>
+
+        <p>Then show the minimum viable usage. Not a comprehensive API tour, just the simplest possible example that produces a visible result. Three to five lines of code, maximum.</p>
+
+        <h3>4. Usage Examples</h3>
+        <p>After the quick start, show two or three progressively more complex examples. Each example should demonstrate a single concept: basic usage, configuration options, advanced patterns. Include the expected output or a screenshot for visual projects.</p>
+
+        <h3>5. API Reference</h3>
+        <p>For libraries, document every public function, component, or endpoint. Include the function signature, parameter types, return type, and a brief description. For large APIs, link to a dedicated documentation site rather than putting everything in the README.</p>
+
+        <h3>6. Configuration</h3>
+        <p>If your project has configuration options, list them in a table with the option name, type, default value, and description. Tables are scannable. Paragraphs of configuration text are not.</p>
+
+        <h3>7. Contributing</h3>
+        <p>Explain how to set up the development environment, run tests, and submit a pull request. If your project has a separate CONTRIBUTING.md file, link to it here. The key information to include: how to fork and clone, how to install dev dependencies, how to run the test suite, and what your PR review process looks like.</p>
+
+        <h3>8. License</h3>
+        <p>State the license clearly. "MIT" or "Apache 2.0" is sufficient. Link to the LICENSE file in the repository.</p>
+
+        <h2>Writing Tips for Non-Native Speakers</h2>
+
+        <p>README writing is a specific style of technical English that follows conventions you will not learn in school or from general writing courses. Here are the patterns that matter most:</p>
+
+        <ul>
+            <li><strong>Use the imperative mood for instructions:</strong> "Install the package" not "You should install the package" or "The package can be installed." Imperative mood is shorter, clearer, and standard in technical documentation.</li>
+            <li><strong>Prefer "you" over "we":</strong> "You can configure the timeout" is clearer than "We can configure the timeout." The reader is the one doing the action.</li>
+            <li><strong>Keep sentences short:</strong> Aim for 15-20 words per sentence. Technical writing is not the place for complex subordinate clauses.</li>
+            <li><strong>Use consistent terminology:</strong> If you call it a "config file" in one place, do not call it a "settings file" in another. Pick one term and stick with it throughout.</li>
+            <li><strong>Avoid idioms:</strong> "Out of the box," "under the hood," and "at the end of the day" are confusing for non-native readers. Use literal language.</li>
+            <li><strong>Active voice over passive:</strong> "The function returns a promise" is clearer than "A promise is returned by the function."</li>
+        </ul>
+
+        <h2>Common README Mistakes</h2>
+
+        <ol>
+            <li><strong>No installation instructions.</strong> If a user has to read your package.json to figure out how to install your project, you have already lost them.</li>
+            <li><strong>Examples that do not work.</strong> Test your README examples. Copy them into a fresh project and verify they run. Stale examples are worse than no examples because they waste the user's time and erode trust.</li>
+            <li><strong>Wall of text with no headings.</strong> README files are scanned, not read linearly. Use headings, code blocks, and lists to create visual structure.</li>
+            <li><strong>Outdated screenshots.</strong> If your UI has changed since the screenshots were taken, remove them or update them. Outdated screenshots suggest an abandoned project.</li>
+            <li><strong>No mention of requirements or prerequisites.</strong> State the minimum Node.js version, required system dependencies, and any environment variables upfront. A user who installs your package only to discover it requires Python 3.9 and Redis will be frustrated.</li>
+            <li><strong>Explaining "why" before "how."</strong> Users want to know how to use your project before they care about your architectural decisions. Lead with practical information. Put the philosophy section after the usage guide.</li>
+        </ol>
+
+        <h2>README Template</h2>
+
+        <p>Copy this template and fill in your project-specific details. Every section is included, but you can remove sections that do not apply to your project.</p>
+
+        <div class="template-block">
+            <h4>Copy-Paste Template</h4>
+            <pre><code># Project Name
+
+One-sentence description of what this project does and who it is for.
+
+![Build Status](badge-url) ![npm version](badge-url) ![License](badge-url)
+
+## Quick Start
+
+```bash
+npm install your-package
+```
+
+```javascript
+import { Component } from 'your-package';
+
+const result = Component.doSomething();
+console.log(result);
+```
+
+## Installation
+
+### Prerequisites
+- Node.js >= 18
+- npm >= 9
+
+### Steps
+```bash
+git clone https://github.com/you/project.git
+cd project
+npm install
+```
+
+## Usage
+
+### Basic Example
+```javascript
+// Your simplest use case here
+```
+
+### Configuration
+| Option    | Type    | Default | Description            |
+|-----------|---------|---------|------------------------|
+| timeout   | number  | 3000    | Request timeout in ms  |
+| retries   | number  | 3       | Number of retry attempts |
+
+## API Reference
+
+### `functionName(param1, param2)`
+- **param1** (string): Description
+- **param2** (number, optional): Description. Default: `10`
+- **Returns:** Promise&lt;Result&gt;
+
+## Contributing
+
+1. Fork the repository
+2. Create your branch: `git checkout -b feat/my-feature`
+3. Commit your changes: `git commit -m 'feat: add my feature'`
+4. Push: `git push origin feat/my-feature`
+5. Open a Pull Request
+
+## License
+
+MIT - see [LICENSE](LICENSE) for details.</code></pre>
+        </div>
+
+        <h2>Automated README Quality Checks</h2>
+
+        <p>Just as you lint your code, you can lint your documentation. The <a href="https://github.com/niceBeLikeNative/bln-writing-assistant" target="_blank" rel="noopener">bln-writing-assistant</a> GitHub Action reviews README files and markdown documentation on every PR. It checks for grammar issues, missing sections, broken links, and clarity problems. It is particularly useful for teams where multiple contributors edit documentation, because it enforces a consistent standard automatically.</p>
+
+        <p>You can also use the <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">BeLikeNative Chrome Extension</a> to get real-time writing suggestions while editing README files directly in the GitHub web editor. It catches grammar issues, suggests clearer phrasing, and flags common non-native speaker patterns as you type.</p>
+
+        <div class="cta-box">
+            <h3>Write Better Documentation Automatically</h3>
+            <p>Lint your README and documentation files for grammar, clarity, and completeness on every PR.</p>
+            <a href="https://github.com/niceBeLikeNative/bln-writing-assistant" class="cta-btn" target="_blank" rel="noopener">Writing Assistant Action</a>
+            <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" class="cta-btn" target="_blank" rel="noopener">Chrome Extension</a>
+        </div>
+
+        <section class="related-articles">
+            <h2>Related Articles</h2>
+            <a href="grammar-for-developers.html" class="related-link">
+                <strong>Grammar for Developers: A Practical Guide to Writing Clear Technical English</strong>
+                <span>The 10 most common grammar mistakes in code reviews and how to fix them.</span>
+            </a>
+            <a href="commit-message-guide.html" class="related-link">
+                <strong>The Complete Guide to Writing Better Commit Messages</strong>
+                <span>Master the imperative mood, Conventional Commits, and 10 before-and-after examples.</span>
+            </a>
+            <a href="code-review-communication.html" class="related-link">
+                <strong>Code Review Communication: How to Give Clear, Constructive Feedback</strong>
+                <span>Tone and language patterns that work across cultures and timezones.</span>
+            </a>
+            <a href="i18n-best-practices.html" class="related-link">
+                <strong>i18n Best Practices for React and JavaScript Projects</strong>
+                <span>From string extraction to plural handling to automated detection.</span>
+            </a>
+        </section>
+    </article>
+
+    <footer class="site-footer">
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+            <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+            <a href="grammar-for-developers.html">Grammar Guide</a>
+            <a href="i18n-best-practices.html">i18n Guide</a>
+            <a href="commit-message-guide.html">Commit Guide</a>
+            <a href="readme-writing-guide.html">README Guide</a>
+            <a href="code-review-communication.html">Code Review Guide</a>
+        </nav>
+        <p>&copy; 2026 BeLikeNative. Helping developers write better English, one commit at a time.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Complete Guide to Writing Better Commit Messages</title>
+    <meta name="description" content="Learn the Conventional Commits format, master the imperative mood, and see 10 before-and-after examples. A practical guide for developers who want cleaner git history.">
+    <meta property="og:title" content="The Complete Guide to Writing Better Commit Messages">
+    <meta property="og:description" content="Conventional Commits format, imperative mood, and 10 before-and-after examples for cleaner git history.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://theluckystrike.github.io/bln-dev-blog/articles/commit-message-guide.html">
+    <meta property="article:published_time" content="2026-05-03">
+    <meta property="article:author" content="BeLikeNative Team">
+    <link rel="canonical" href="https://theluckystrike.github.io/bln-dev-blog/articles/commit-message-guide.html">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0d1117;
+            --bg-card: #161b22;
+            --bg-hover: #1c2129;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --green: #3fb950;
+            --red: #f85149;
+            --purple: #bc8cff;
+            --yellow: #d29922;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        .site-header { border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; }
+        .header-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+        .site-logo { font-size: 1.25rem; font-weight: 700; color: var(--text); }
+        .site-logo:hover { color: var(--accent); text-decoration: none; }
+        .site-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+        .site-nav a { color: var(--text-muted); font-size: 0.9rem; }
+        .site-nav a:hover { color: var(--text); text-decoration: none; }
+        .breadcrumb { max-width: 720px; margin: 1.5rem auto 0; padding: 0 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
+        .breadcrumb a { color: var(--text-muted); }
+        .breadcrumb a:hover { color: var(--accent); }
+        .article-container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+        .article-container h1 { font-size: 2rem; line-height: 1.25; margin-bottom: 0.75rem; }
+        .article-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+        .article-container h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; padding-top: 1rem; }
+        .article-container h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
+        .article-container p { margin-bottom: 1rem; }
+        .article-container ul, .article-container ol { margin: 0.5rem 0 1rem 1.5rem; }
+        .article-container li { margin-bottom: 0.4rem; }
+        .article-container code {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+        .article-container pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+        .article-container pre code { background: none; border: none; padding: 0; }
+        .example-block {
+            background: var(--bg-card);
+            border-left: 3px solid var(--border);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .example-block.bad { border-left-color: var(--red); }
+        .example-block.good { border-left-color: var(--green); }
+        .example-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+        .example-label.bad { color: var(--red); }
+        .example-label.good { color: var(--green); }
+        .cta-box {
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .cta-box h3 { margin-bottom: 0.5rem; color: var(--accent); }
+        .cta-box p { color: var(--text-muted); margin-bottom: 1rem; }
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg) !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+        .cta-btn:hover { background: var(--accent-hover); text-decoration: none; }
+        .related-articles { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .related-articles h2 { margin-top: 0; padding-top: 0; }
+        .related-link {
+            display: block;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .related-link:hover { border-color: var(--accent); text-decoration: none; }
+        .related-link strong { color: var(--text); }
+        .related-link span { display: block; color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; }
+        .site-footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .footer-links { max-width: 960px; margin: 0 auto 1rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 1.25rem; }
+        @media (max-width: 600px) {
+            .article-container h1 { font-size: 1.5rem; }
+            .article-container h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../" class="site-logo">BeLikeNative Dev Blog</a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+                <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            </nav>
+        </div>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../">Home</a> &rsaquo; Commit Message Guide
+    </nav>
+
+    <article class="article-container">
+        <h1>The Complete Guide to Writing Better Commit Messages</h1>
+        <div class="article-meta">Published May 3, 2026 &middot; BeLikeNative Team &middot; 11 min read</div>
+
+        <p>Your commit history is a form of documentation. Six months from now, when someone runs <code>git blame</code> on a confusing line of code, the commit message is the first thing they will read. If that message says "fix stuff" or "WIP," they learn nothing. If it says "fix race condition in session refresh when token expires during request," they understand the intent immediately.</p>
+
+        <p>Good commit messages are not about being pedantic. They are about respecting your future self and your teammates' time. A well-written commit history turns <code>git log</code> into a readable changelog that explains not just what changed, but why.</p>
+
+        <h2>Why Commit Messages Matter</h2>
+
+        <p>There are three moments when commit messages become critical:</p>
+
+        <ol>
+            <li><strong>Code review:</strong> Reviewers read the commit message before the diff. A good message frames the change and tells the reviewer what to look for.</li>
+            <li><strong>Debugging:</strong> <code>git bisect</code> is only useful when commit messages describe what each change does. If every message is "update," bisect finds the commit but tells you nothing about it.</li>
+            <li><strong>Release notes:</strong> If your project uses automated changelogs (and it should), commit messages become user-facing documentation. "feat: add dark mode toggle" generates a clear changelog entry. "changes" does not.</li>
+        </ol>
+
+        <h2>The Conventional Commits Format</h2>
+
+        <p><a href="https://www.conventionalcommits.org/" target="_blank" rel="noopener">Conventional Commits</a> is a specification that adds structure to commit messages. It is used by Angular, Vue.js, Ionic, and thousands of other projects. The format is:</p>
+
+        <pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;description&gt;
+
+[optional body]
+
+[optional footer(s)]</code></pre>
+
+        <p><strong>Types:</strong></p>
+        <ul>
+            <li><code>feat</code> — A new feature (maps to MINOR in semver)</li>
+            <li><code>fix</code> — A bug fix (maps to PATCH in semver)</li>
+            <li><code>docs</code> — Documentation changes only</li>
+            <li><code>style</code> — Formatting, missing semicolons, etc. (not CSS)</li>
+            <li><code>refactor</code> — Code change that neither fixes a bug nor adds a feature</li>
+            <li><code>perf</code> — Performance improvement</li>
+            <li><code>test</code> — Adding or fixing tests</li>
+            <li><code>chore</code> — Build process, dependencies, tooling</li>
+            <li><code>ci</code> — CI/CD configuration changes</li>
+        </ul>
+
+        <p><strong>Scope</strong> is optional and describes the area of the codebase: <code>feat(auth): add OAuth2 login</code> or <code>fix(api): handle null response from payment provider</code>.</p>
+
+        <h2>The Imperative Mood</h2>
+
+        <p>The single most important style rule for commit messages: use the imperative mood in the subject line. Write "Add feature" not "Added feature" or "Adds feature."</p>
+
+        <p>The imperative mood reads as a command or instruction. It matches what Git itself uses: when you merge, Git creates "Merge branch 'feature'," not "Merged branch." Your commits should follow the same pattern.</p>
+
+        <p>A useful trick: your commit message should complete the sentence "If applied, this commit will ___." "If applied, this commit will <strong>add OAuth2 login</strong>" works. "If applied, this commit will <strong>added OAuth2 login</strong>" does not.</p>
+
+        <h3>Why Non-Native Speakers Struggle with Imperative Mood</h3>
+
+        <p>The imperative mood is genuinely difficult for non-native English speakers because it looks identical to the base form of the verb. In many languages, the imperative has a distinct conjugation that marks it clearly. In English, "Add" (imperative) looks exactly like "Add" (infinitive) and "add" (present simple for I/you/we/they). This ambiguity means there is no visual signal that the imperative is being used.</p>
+
+        <p>Additionally, many languages default to the past tense for describing completed actions, which is what a commit represents. In German, you might naturally write "Funktion hinzugefuegt" (function added). The mental translation often keeps the past tense.</p>
+
+        <p>The fix is mechanical: before committing, re-read your message and check if it starts with a bare verb. "Add," "Fix," "Remove," "Update," "Refactor," "Handle." If it starts with "Added," "Fixed," "Removing," or a noun, rewrite it.</p>
+
+        <h2>10 Before-and-After Examples</h2>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "fixed bug"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "fix(auth): prevent session expiry during active WebSocket connection"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "update"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "refactor(db): replace raw SQL queries with parameterized statements"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "WIP"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "feat(cart): add quantity selector to product detail page"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "changes to the login page"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "fix(ui): correct tab order on login form for keyboard navigation"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "Added tests"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "test(api): add integration tests for rate limiting middleware"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "misc fixes"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "fix(validation): reject negative quantities in order form"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "Refactoring done"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "refactor(notifications): extract email template rendering into separate service"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "more work on feature"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "feat(search): implement fuzzy matching for product name search"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "oops"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "fix(build): add missing dependency for PDF generation module"
+        </div>
+
+        <div class="example-block bad">
+            <div class="example-label bad">Before</div>
+            "final version"
+        </div>
+        <div class="example-block good">
+            <div class="example-label good">After</div>
+            "docs(api): add request/response examples to authentication endpoints"
+        </div>
+
+        <h2>Commit Message Rules to Adopt</h2>
+
+        <ol>
+            <li><strong>Subject line under 72 characters.</strong> This is a hard limit for many Git tools. <code>git log --oneline</code> truncates at 72.</li>
+            <li><strong>Capitalize the first word.</strong> "Fix bug" not "fix bug" (some teams prefer lowercase with Conventional Commits; pick one and be consistent).</li>
+            <li><strong>No period at the end of the subject.</strong> The subject line is a title, not a sentence.</li>
+            <li><strong>Blank line between subject and body.</strong> Git uses this to distinguish the summary from the description.</li>
+            <li><strong>Body explains "why," not "what."</strong> The diff shows what changed. The body should explain the reasoning, the trade-offs, and the alternatives considered.</li>
+            <li><strong>Reference issues.</strong> Add "Closes #123" or "Refs #456" in the footer to link commits to issue trackers.</li>
+        </ol>
+
+        <h2>Tools for Enforcing Commit Standards</h2>
+
+        <p>Humans are inconsistent. The way to get consistent commit messages is to enforce them with tooling.</p>
+
+        <ul>
+            <li><strong>commitlint:</strong> A Node.js tool that validates commit messages against the Conventional Commits spec. Run it as a Git hook.</li>
+            <li><strong>Husky:</strong> Manages Git hooks so you can run commitlint automatically on every commit.</li>
+            <li><strong>commitizen:</strong> An interactive CLI that walks you through writing a properly formatted commit message.</li>
+        </ul>
+
+        <p>For teams where non-native English speakers frequently contribute, the <a href="https://github.com/niceBeLikeNative/bln-commit-lint" target="_blank" rel="noopener">bln-commit-lint</a> GitHub Action adds language-aware checking on top of format validation. It catches common L1 transfer errors in commit messages (like past tense instead of imperative, or missing articles) and suggests corrections inline in the PR.</p>
+
+        <div class="cta-box">
+            <h3>Enforce Commit Standards Automatically</h3>
+            <p>Catch format violations and language issues in commit messages on every PR.</p>
+            <a href="https://github.com/niceBeLikeNative/bln-commit-lint" class="cta-btn" target="_blank" rel="noopener">Commit Lint Action</a>
+        </div>
+
+        <section class="related-articles">
+            <h2>Related Articles</h2>
+            <a href="grammar-for-developers.html" class="related-link">
+                <strong>Grammar for Developers: A Practical Guide to Writing Clear Technical English</strong>
+                <span>The 10 most common grammar mistakes in code reviews and how to fix them.</span>
+            </a>
+            <a href="code-review-communication.html" class="related-link">
+                <strong>Code Review Communication: How to Give Clear, Constructive Feedback</strong>
+                <span>Tone and language patterns that work across cultures and timezones.</span>
+            </a>
+            <a href="readme-writing-guide.html" class="related-link">
+                <strong>How to Write a README That People Actually Read</strong>
+                <span>Section-by-section guide with a complete template you can copy and paste.</span>
+            </a>
+            <a href="i18n-best-practices.html" class="related-link">
+                <strong>i18n Best Practices for React and JavaScript Projects</strong>
+                <span>From string extraction to plural handling to automated detection.</span>
+            </a>
+        </section>
+    </article>
+
+    <footer class="site-footer">
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="https://belikenative.com" target="_blank" rel="noopener">BeLikeNative</a>
+            <a href="https://chromewebstore.google.com/detail/belikenative/faulknermpbfnmeemkjdaaikoacgcopp" target="_blank" rel="noopener">Chrome Extension</a>
+            <a href="https://github.com/niceBeLikeNative" target="_blank" rel="noopener">GitHub</a>
+            <a href="grammar-for-developers.html">Grammar Guide</a>
+            <a href="i18n-best-practices.html">i18n Guide</a>
+            <a href="commit-message-guide.html">Commit Guide</a>
+            <a href="readme-writing-guide.html">README Guide</a>
+            <a href="code-review-communication.html">Code Review Guide</a>
+        </nav>
+        <p>&copy; 2026 BeLikeNative. Helping developers write better English, one commit at a time.</p>
+    </footer>
+</body>
+</html>
